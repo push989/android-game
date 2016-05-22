@@ -1,6 +1,7 @@
 package com.mygdx.game.states;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
@@ -53,8 +54,10 @@ public class PlayState extends State {
                 tube.reposition(tube.getPosTopTube().x + ((Tube.TUBE_WIDTH + TUBE_SPACING) * TUBE_COUNT));
             }
 
-            if(tube.collides(bird.getBounds()))
+            if(tube.collides(bird.getBounds())) {
                 gsm.set(new PlayState(gsm));
+                break;
+            }
         }
 
         cam.update();
@@ -75,6 +78,11 @@ public class PlayState extends State {
 
     @Override
     public void dispose() {
-
+        bg.dispose();
+        bird.dispose();
+        for(Tube tube : tubes) {
+            tube.dispose();
+        }
+        System.out.println("Play state disposed");
     }
 }
